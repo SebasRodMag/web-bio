@@ -1,0 +1,302 @@
+:root {
+    --color-principal-dia: #2a7bff;
+    /* azul “día” (ejemplo) */
+    --color-principal-noche: #0ed678;
+    /* verde “noche” (ejemplo) */
+
+    /* Map semántico: cambia solo aquí al alternar tema */
+    --accent: var(--color-principal-noche);
+
+    /* Otros tokens del tema oscuro (noche) */
+    --bg: #0b0d0e;
+    --fg: #e9f0f2;
+    --muted: #9fb0b7;
+    --card: #12161a;
+    --line: #1d2329;
+    --maxw: 1000px;
+}
+
+/* Tema claro (día) */
+[data-theme="light"] {
+    --accent: var(--color-principal-dia);
+
+    --bg: #f7fafc;
+    --fg: #0e1720;
+    --muted: #5d6a72;
+    --card: #ffffff;
+    --line: #e6e9ed;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif
+}
+
+a {
+    color: var(--accent);
+}
+
+.btn {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+.btn:hover {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.chip {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    color: var(--accent);
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+.wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 24px
+}
+
+/* Top bar */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+
+.topbar .brand {
+    font-weight: 600
+}
+
+nav a {
+    margin-right: 12px
+}
+
+/* Botones y chips */
+.btn {
+    border: 1px solid var(--color-tema);
+    color: var(--color-tema);
+    background: transparent;
+    padding: .55rem .9rem;
+    border-radius: .7rem;
+    cursor: pointer
+}
+
+.btn:hover {
+    background: color-mix(in srgb, var(--color-tema) 12%, transparent)
+}
+
+.btn.ghost {
+    border: 1px solid var(--line);
+    color: var(--fg)
+}
+
+.chips {
+    margin: 8px 0
+}
+
+.chip {
+    display: inline-block;
+    background: color-mix(in srgb, var(--color-tema) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-tema) 45%, transparent);
+    color: var(--color-tema);
+    padding: .35rem .6rem;
+    border-radius: .6rem;
+    margin: .2rem;
+    font-size: .85rem
+}
+
+/* Hero */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 40px 0 24px
+}
+
+.hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: .3rem 0
+}
+
+.hero .sub {
+    color: var(--muted);
+    margin: 0
+}
+
+.hero .cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 12px
+}
+
+/* Secciones */
+section {
+    margin: 48px 0 0
+}
+
+h2 {
+    text-align: center;
+    margin: 0 0 12px
+}
+
+.lead {
+    color: var(--muted);
+    text-align: center;
+    margin: 0 0 18px
+}
+
+/* Grid de tarjetas */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px
+}
+
+@media (max-width:900px) {
+    .grid {
+        grid-template-columns: 1fr 1fr
+    }
+}
+
+@media (max-width:600px) {
+    .grid {
+        grid-template-columns: 1fr
+    }
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px
+}
+
+.card h3 {
+    margin: 6px 0 8px
+}
+
+.card .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px
+}
+
+/* Footer */
+.footer {
+    margin: 56px 0 12px;
+    opacity: .75;
+    text-align: center
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, .5)
+}
+
+.modal[hidden] {
+    display: none
+}
+
+.modal-box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    max-width: 720px;
+    max-height: 80vh;
+    overflow: auto;
+    padding: 18px
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px
+}
+
+/* Fondo del modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, .5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease, visibility .18s ease;
+    z-index: 1000
+}
+
+.modal:not([hidden]) {
+    opacity: 1;
+    visibility: visible
+}
+
+/* Caja del modal */
+.modal-box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    width: min(720px, 92vw);
+    max-height: 80vh;
+    overflow: auto;
+    padding: 18px;
+    position: relative;
+    transform: translateY(6px);
+    transition: transform .18s ease
+}
+
+.modal:not([hidden]) .modal-box {
+    transform: translateY(0)
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px
+}
+
+/* Botón X */
+.modal-x {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--fg);
+    border-radius: .5rem;
+    padding: .2rem .5rem;
+    cursor: pointer
+}
+
+.modal-x:hover {
+    background: color-mix(in srgb, var(--fg) 6%, transparent)
+}
+
+/* Evitar “salto” de scroll al bloquear body */
+body.lock-scroll {
+    overflow: hidden
+}

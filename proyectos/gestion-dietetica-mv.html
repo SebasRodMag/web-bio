@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Clínica Dietética MV — Detalle</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="topbar">
+            <a href="/">← Volver</a>
+            <div style="flex:1"></div>
+            <button class="btn" id="themeToggle" type="button">Tema</button>
+        </header>
+
+        <main>
+            <article id="projectDetail" class="card"></article>
+        </main>
+    </div>
+
+    <script>
+        // tema (mismo que en main.js)
+        const root = document.documentElement;
+        const saved = localStorage.getItem('theme');
+        if (saved) root.setAttribute('data-theme', saved);
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const now = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', now); localStorage.setItem('theme', now);
+        });
+
+        // Cargar el mismo MD
+        (async () => {
+            const url = '/content/proyectos/clinica-mv.md'; // mismo archivo
+            const res = await fetch(url, { cache: 'no-store' });
+            const md = await res.text();
+            const raw = marked.parse(md, { breaks: true, mangle: false, headerIds: true });
+            const safe = DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
+            document.getElementById('projectDetail').innerHTML = safe;
+        })();
+    </script>
+</body>
+
+</html>
