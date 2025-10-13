@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Detalle del proyecto</title>
+    <meta name="description" content="Detalle del proyecto.">
+    <link rel="stylesheet" href="../style.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="topbar">
+            <a href="../">Inicio</a>
+            <div style="flex:1"></div>
+            <button class="btn" id="themeToggle" type="button">Tema</button>
+        </header>
+
+        <main>
+            <article id="content" class="card" aria-live="polite">
+                <p class="muted">Cargando…</p>
+            </article>
+        </main>
+
+        <footer class="footer">© <span id="yr"></span> Sebastián Rodríguez</footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Tema/pie
+            const root = document.documentElement; const saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved);
+            document.getElementById('themeToggle').addEventListener('click', () => { const now = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; root.setAttribute('data-theme', now); localStorage.setItem('theme', now); });
+            document.getElementById('yr').textContent = new Date().getFullYear();
+
+            // Lee ?src= y (opcional) ?title=
+            const params = new URLSearchParams(location.search);
+            let src = (params.get('src') || '').replace(/^\/+/, ''); // evitar "/" inicial
+            const explicitTitle = params.get('title');
+
+            if (!src) { document.getElementById('content').innerHTML = '<p class="muted">Falta el parámetro <code>src</code>.</p>'; return; }
+
+            try {
+                const res = await fetch('../' + src, { cache: 'no-store' }); // desde /proyectos/ subimos un nivel
+                if (!res.ok) throw new Error(`HTTP ${res.status} (${src})`);
+                const md = await res.text();
+
+                const raw = (typeof marked.parse === 'function') ? marked.parse(md, { breaks: true, mangle: false, headerIds: true }) : marked(md);
+                const html = DOMPurify.sanitize(raw, { USE_PROFILES: { html: true } });
+
+                const container = document.getElementById('content');
+                container.innerHTML = html;
+
+                // Título/meta
+                const h1 = container.querySelector('h1');
+                const finalTitle = explicitTitle || (h1?.textContent?.trim()) || 'Detalle del proyecto';
+                document.title = `${finalTitle} — Detalle`;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                const firstP = Array.from(container.querySelectorAll('p')).find(p => p.textContent.trim().length > 0);
+                if (firstP) metaDesc.setAttribute('content', firstP.textContent.trim().replace(/\s+/g, ' ').slice(0, 155));
+
+                // Lazy images
+                container.querySelectorAll('img:not([loading])').forEach(img => img.setAttribute('loading', 'lazy'));
+            } catch (err) {
+                console.error(err);
+                document.getElementById('content').innerHTML = `<p class="muted">No se pudo cargar el contenido: ${String(err.message || err)}</p>`;
+            }
+        });
+    </script>
+</body>
+
+</html>

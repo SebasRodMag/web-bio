@@ -18,7 +18,6 @@ Las vistas de citas necesitaban un calendario único, reutilizable y accesible.
 - **Angular** (standalone) + **FullCalendar**.
 - **Estado**: servicio de eventos con filtros reactivos.
 - **UI**: modal accesible (focus trap, `Esc`, retorno de foco).
-- **Build/Deploy**: estático (Nginx/Caddy o GitHub Pages).
 
 [ Angular App ] → [ Componente Calendario ]
 ├─ Servicio de eventos (fetch/transform)
@@ -36,6 +35,7 @@ Las vistas de citas necesitaban un calendario único, reutilizable y accesible.
 - Integrado en **3 vistas** con mínima configuración.
 
 ## Galería
+
 ![Vista mensual](/assets/proyectos/calendario/mes.webp)
 ![Modal de detalle](/assets/proyectos/calendario/modal.webp)
 ![Barra de filtros](/assets/proyectos/calendario/filtros.webp)

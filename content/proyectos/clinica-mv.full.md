@@ -29,11 +29,23 @@ Plataforma web para clínicas dietéticas que centraliza citas, videoconsulta y 
 
 ## Galería
 #### Calendario mensual
-![Calendario](/assets/proyectos/clinica-mv/calendario.png)
+<p align="center">
+  <img src="/assets/proyectos/clinica-mv/calendario.png" alt="Imagen calendario" width="300">
+</p>
+
+<!-- ![Calendario](/assets/proyectos/clinica-mv/calendario.png) -->
 #### Registro del historial del paciente
-![Historial](/assets/proyectos/clinica-mv/historiales.png)
+<p align="center">
+  <img src="/assets/proyectos/clinica-mv/historiales.png" alt="Imagen historiales" width="300">
+</p>
+
+<!-- ![Historial](/assets/proyectos/clinica-mv/historiales.png) -->
 #### Videollamadas dentro de la plataforma
-![Videollamada](/assets/proyectos/clinica-mv/Videollamada.png)
+<p align="center">
+  <img src="/assets/proyectos/clinica-mv/Videollamada.png" alt="Imagen videollamada" width="300">
+</p>
+
+<!-- ![Videollamada](/assets/proyectos/clinica-mv/Videollamada.png) -->
 
 ## Enlaces
 - **Demo**: https://www.clinicamv.lol
