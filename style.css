@@ -119,6 +119,14 @@ nav a {
     font-size: .85rem
 }
 
+/* header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+
 /* Hero */
 .hero {
     display: flex;

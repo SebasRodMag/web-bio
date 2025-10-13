@@ -15,11 +15,13 @@ Se necesitaba un **edge router** único con certificados, rutas limpias y fácil
 - **CI/CD**: build & push de imágenes desde GitHub Actions.
 
 ## Arquitectura (alto nivel)
+```yaml
 [ Internet ] → [ Traefik ]
 ├─ Frontend (web)
 ├─ API (backend)
 ├─ PHP-FPM (si aplica)
 └─ DB (red interna)
+```
 
 
 - **Redes**: `public` (entrada), `internal` (servicios).  
