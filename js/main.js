@@ -1,4 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== Idioma actual =====
+    const DEFAULT_LANG = 'es';
+    const langSelect = document.getElementById('langSelect');
+    const savedLang = localStorage.getItem('lang');
+    let currentLang = savedLang || (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+    if (langSelect) langSelect.value = currentLang;
+    document.documentElement.lang = currentLang;
+
+    const I18N = {
+        es: {
+            'nav.projects': 'Proyectos',
+            'nav.contact': 'Contacto',
+            'actions.theme': 'Tema',
+            'actions.quick': 'Vista rápida',
+            'actions.detail': 'Ver detalle',
+        },
+        en: {
+            'nav.projects': 'Projects',
+            'nav.contact': 'Contact',
+            'actions.theme': 'Theme',
+            'actions.quick': 'Quick view',
+            'actions.detail': 'View details',
+        }
+    };
+
+    //Precedencia del .md
+    function toFinalMdUrl(baseOrFull, lang) {
+        // Si ya viene con .md, lo respetamos
+        if (/\.md$/i.test(baseOrFull)) return baseOrFull.replace(/^\/+/, '');
+        // Si no, construimos base + .<lang>.md
+        return `${baseOrFull}.${lang}.md`.replace(/^\/+/, '');
+    }
+
+    // Aplicar textos UI
+    function applyI18n(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const txt = I18N[lang]?.[key] || I18N[DEFAULT_LANG][key] || el.textContent;
+            el.textContent = txt;
+        });
+        // Cambia html@lang
+        document.documentElement.lang = lang;
+    }
+    applyI18n(currentLang);
+
+    // Cambiar idioma
+    langSelect?.addEventListener('change', () => {
+        currentLang = langSelect.value;
+        localStorage.setItem('lang', currentLang);
+        applyI18n(currentLang);
+    });
     // ========== Tema persistente ==========
     const root = document.documentElement;
     const btnTheme = document.getElementById('themeToggle');
@@ -54,6 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return Array.from(box.querySelectorAll(sel)).filter(el => el.offsetParent !== null);
     };
 
+    async function fetchWithFallback(baseOrFull) {
+        // 1º intenta con el idioma actual; 2º cae a ES
+        const tryOnce = async (u) => {
+            const res = await fetch(u, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status} al cargar ${u}`);
+            return res.text();
+        };
+        const first = toFinalMdUrl(baseOrFull, currentLang);
+        try { return await tryOnce(first); }
+        catch {
+            const fallback = toFinalMdUrl(baseOrFull, 'es');
+            if (fallback === first) throw error; // ya era ES
+            return await tryOnce(fallback);
+        }
+    }
+
+
     async function loadMarkdown(url) {
         const finalUrl = url.replace(/^\/+/, ''); // quita "/" inicial por si acaso
         const res = await fetch(finalUrl, { cache: 'no-store' });
@@ -61,14 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.text();
     }
 
-    async function openFromMarkdown(url) {
+    async function openFromMarkdown(baseOrFull) {
         try {
             lastFocus = document.activeElement;
             modal.hidden = false;
             document.body.classList.add('lock-scroll');
             content.innerHTML = '<p class="muted">Cargando…</p>';
 
-            const md = await loadMarkdown(url);
+            const md = await fetchWithFallback(baseOrFull);
             const raw = parseMd(md);
             const safe = purify(raw);
             content.innerHTML = safe;
@@ -80,6 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
             content.innerHTML = `<p class="muted">Error cargando el contenido. ${String(err.message || err)}</p>`;
         }
     }
+
+
 
     function close() {
         modal.hidden = true;

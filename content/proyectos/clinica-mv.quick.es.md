@@ -9,4 +9,4 @@ Citas, videoconsulta Jitsi y documentos por rol.
 - **Jitsi** embebido (sin apps)
 - Despliegue con **Docker**
 
-[Ver detalle](/proyectos/gestion-clinica-mv.html)
+[Ver en detalle](proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Cl%C3%ADnica%20Diet%C3%A9tica%20MV)
