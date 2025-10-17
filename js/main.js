@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav.experience': 'Experiencia',
             'nav.projects': 'Proyectos',
             'nav.contact': 'Contacto',
-            'hero.cta.view': 'Ver proyectos',
+            'nav.view': 'Ver proyectos',
             'hero.cta.copy': 'Copiar email',
             'hero.cta.developer': 'Desarrollador Full-Stack · Laravel · Angular · Docker',
             'section.projects': 'Proyectos',
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'badge.available': 'Disponible',
 
             // Cards (descripciones breves)
-            'card.mv.title': 'Clínica Dietética MV',
+            'card.mv.title': 'Gestión Clinica MV',
+            'card.cm.title': 'Centro Médico',
             'card.mv.desc': 'Gestión de citas clínicas, videollamada Jitsi, control por roles y auditoría.',
             'card.cal.title': 'Calendario Interactivo',
             'card.cal.desc': 'FullCalendar + Angular, modales accesibles y filtros.',
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav.experience': 'Experience',
             'nav.projects': 'Projects',
             'nav.contact': 'Contact',
-            'hero.cta.view': 'See projects',
+            'nav.view': 'See projects',
             'hero.cta.copy': 'Copy email',
             'hero.cta.developer': 'Full-Stack Developer · Laravel · Angular · Docker',
             'section.projects': 'Projects',
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'badge.available': 'Available',
 
             // Cards
-            'card.mv.title': 'MV Dietetics Clinic',
+            'card.mv.title': 'MV Clinic Management',
+            'card.cm.title': 'Medical Center',
             'card.mv.desc': 'Appointments, Jitsi videocalls, role-based access and auditing.',
             'card.cal.title': 'Interactive Calendar',
             'card.cal.desc': 'FullCalendar + Angular, accessible modals and filters.',
@@ -225,4 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Año en footer (si existe)
     const yr = document.getElementById('yr');
     if (yr) yr.textContent = new Date().getFullYear();
+
+    // Filtro de proyectos
+    const buttons = document.querySelectorAll('[data-filter]');
+    const cards = document.querySelectorAll('.project-card');
+    buttons.forEach(b => b.addEventListener('click', () => {
+        const tag = b.getAttribute('data-filter');
+        buttons.forEach(x => x.classList.remove('active')); b.classList.add('active');
+        cards.forEach(c => {
+            const tags = c.getAttribute('data-tags').split(',');
+            c.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+        });
+    }));
 });
