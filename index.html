@@ -19,10 +19,10 @@
     <div class="wrap">
         <!-- Header -->
         <header>
-            <div class="muted"><span class="badge">Disponible</span></div>
+            <div class="muted"><span class="badge" data-i18n="badge.available">Disponible</span></div>
             <nav aria-label="principal">
-                <a href="#proyectos">Experiencia</a>
-                <a href="#contacto">Contacto</a>
+                <a href="#proyectos" data-i18n="nav.experience">Experiencia</a>
+                <a href="#contacto" data-i18n="nav.contact">Contacto</a>
             </nav>
             <div style="display:flex; gap:8px">
                 <div class="lang-wrap">
@@ -31,74 +31,113 @@
                         <option value="es">ES</option>
                         <option value="en">EN</option>
                     </select>
-                    <button class="btn" id="themeToggle" aria-label="Cambiar tema" data-i18n="actions.theme">Tema</button>
+                    <button class="btn" id="themeToggle" aria-label="Cambiar tema"
+                        data-i18n="actions.theme">Tema</button>
                 </div>
             </div>
-            
+
 
         </header>
 
         <!-- Hero centrado -->
         <section class="hero" aria-labelledby="h1">
             <h1 id="h1" data-anim="fade">Sebastián Rodríguez</h1>
-            <p class="sub muted" data-anim="fade">Desarrollador Full-Stack · Laravel · Angular · Docker</p>
-            <div data-anim="fade">
+            <p class="sub muted" data-anim="fade" data-i18n="hero.cta.developer">Desarrollador Full-Stack · Laravel ·
+                Angular · Docker</p>
+            <div class="filterbar" data-anim="fade">
                 <span class="chip">Laravel</span><span class="chip">Angular</span><span class="chip">Docker</span>
                 <span class="chip">MySQL</span><span class="chip">GSAP</span>
             </div>
             <div class="hero-cta" data-anim="fade">
-                <a class="btn" href="#proyectos">Ver proyectos</a>
-                <button class="btn ghost" id="copyEmail" type="button">Copiar email</button>
+                <a class="btn" href="#proyectos" data-i18n="hero.cta.view">Ver proyectos</a>
+                <button class="btn ghost" id="copyEmail" type="button" data-i18n="hero.cta.copy">Copiar email</button>
             </div>
         </section>
 
         <!-- PROYECTOS -->
-        <section id="proyectos" aria-labelledby="h2-proyectos">
-            <h2 id="h2-proyectos">Proyectos</h2>
-            <p class="lead">Tenemos el proyecto Gestión Clinica MV y los diferentes desafíos que he resuelto.</p>
+        <section id="experiencia" aria-labelledby="exp-title">
+            <h2 id="exp-title" class="center" data-i18n="section.experience">Experiencia</h2>
+            <p class="lead center" data-i18n="section.experience.lead">Un resumen de roles y responsabilidades
+                destacadas.</p>
 
-            <div class="grid">
-                <article class="card">
-                    <h3>Clínica Dietética MV</h3>
-                    <p>Gestión de citas clínicas, videollamada Jitsi, control por roles y auditoría.</p>
-                    <div class="actions">
-                        <a class="btn" href="#" data-modal-md="content/proyectos/clinica-mv.quick">Vista rápida</a>
+            <ol class="timeline" aria-label="Cronología">
+                <li class="tl-item">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <article class="tl-card">
+                        <h3 data-i18n="card.mv.title">Clínica Dietética MV</h3>
+                        <p class="muted">Laravel · Angular · Docker</p>
+                        <ul>
+                            <li>API REST con autenticación y roles.</li>
+                            <li>Calendario y modales accesibles.</li>
+                            <li>Despliegue Docker y proxy inverso.</li>
+                        </ul>
+                        <div class="actions">
+                            <a class="btn" href="#" data-modal-md="content/proyectos/clinica-mv.quick"
+                                data-i18n="actions.quick">Vista rápida</a>
+                            <a class="btn ghost"
+                                href="proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Cl%C3%ADnica%20Diet%C3%A9tica%20MV"
+                                data-i18n="actions.detail">Ver detalle</a>
+                        </div>
+                    </article>
+                </li>
 
-                        <a class="btn ghost"
-                            href="proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Cl%C3%ADnica%20Diet%C3%A9tica%20MV">
-                            Ver detalle
-                        </a>
-                    </div>
-                </article>
+                <li class="tl-item">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <article class="tl-card">
+                        <h3 data-i18n="card.tr.title">Stack Traefik</h3>
+                        <p class="muted">CI/CD · Contenedores</p>
+                        <ul>
+                            <li>TLS automático, routing por host/path.</li>
+                            <li>Build/push de imágenes.</li>
+                        </ul>
+                        <div class="actions">
+                            <a class="btn" href="#" data-modal-md="content/proyectos/stack-traefik.quick"
+                                data-i18n="actions.quick">Vista rápida</a>
+                            <a class="btn ghost"
+                                href="proyectos/detalle.html?src=content/proyectos/stack-traefik&title=Stack%20Traefik"
+                                data-i18n="actions.detail">Ver detalle</a>
+                        </div>
+                    </article>
+                </li>
 
-                <article class="card">
-                    <h3>Calendario Interactivo</h3>
-                    <p>FullCalendar + Angular, modales accesibles y filtros.</p>
-                    <div class="actions">
-                        <a class="btn" href="#" data-modal-md="content/proyectos/stack-traefik.quick">Vista
-                            rápida</a>
+                <li class="tl-item">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <article class="tl-card">
+                        <h3 data-i18n="card.cal.title">Calendario Interactivo</h3>
+                        <p class="muted">FullCalendar · Angular</p>
+                        <ul>
+                            <li>Filtros por estado y acciones rápidas.</li>
+                            <li>Focus trap y accesibilidad real.</li>
+                        </ul>
+                        <div class="actions">
+                            <a class="btn" href="#" data-modal-md="content/proyectos/calendario-interactivo.quick"
+                                data-i18n="actions.quick">Vista rápida</a>
+                            <a class="btn ghost"
+                                href="proyectos/detalle.html?src=content/proyectos/calendario-interactivo&title=Calendario%20Interactivo"
+                                data-i18n="actions.detail">Ver detalle</a>
+                        </div>
+                    </article>
+                </li>
 
-                        <a class="btn ghost"
-                            href="proyectos/detalle.html?src=content/proyectos/calendario-interactivo&title=Calendario%20interactivo">
-                            Ver detalle
-                        </a>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <h3>Stack Traefik</h3>
-                    <p>Reverse proxy, TLS automático y CI/CD con GitHub Actions.</p>
-                    <div class="actions">
-                        <a class="btn" href="#" data-modal-md="content/proyectos/stack-traefik.quick">Vista
-                            rápida</a>
-                        <a class="btn ghost"
-                            href="proyectos/detalle.html?src=content/proyectos/stack-traefik&title=Stack%20Traefik">
-                            Ver detalle
-                        </a>
-
-                    </div>
-                </article>
-            </div>
+                <li class="tl-item">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <article class="tl-card">
+                        <h3>Videollamadas con Jitsi</h3>
+                        <p class="muted">Integración embebida</p>
+                        <ul>
+                            <li>Salas seguras con token.</li>
+                            <li>Join en un clic desde la cita.</li>
+                        </ul>
+                        <div class="actions">
+                            <a class="btn" href="#" data-modal-md="content/proyectos/clinica-mv.quick"
+                                data-i18n="actions.quick">Vista rápida</a>
+                            <a class="btn ghost"
+                                href="proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Cl%C3%ADnica%20Diet%C3%A9tica%20MV"
+                                data-i18n="actions.detail">Ver detalle</a>
+                        </div>
+                    </article>
+                </li>
+            </ol>
         </section>
 
         <!-- CONTACTO -->

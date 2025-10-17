@@ -9,18 +9,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const I18N = {
         es: {
+            'nav.experience': 'Experiencia',
             'nav.projects': 'Proyectos',
             'nav.contact': 'Contacto',
+            'hero.cta.view': 'Ver proyectos',
+            'hero.cta.copy': 'Copiar email',
+            'hero.cta.developer': 'Desarrollador Full-Stack · Laravel · Angular · Docker',
+            'section.projects': 'Proyectos',
+            'section.projects.lead': 'Una selección breve. Luego haremos páginas de detalle.',
+            'section.contact': 'Contacto',
             'actions.theme': 'Tema',
             'actions.quick': 'Vista rápida',
             'actions.detail': 'Ver detalle',
+            'badge.available': 'Disponible',
+
+            // Cards (descripciones breves)
+            'card.mv.title': 'Clínica Dietética MV',
+            'card.mv.desc': 'Gestión de citas clínicas, videollamada Jitsi, control por roles y auditoría.',
+            'card.cal.title': 'Calendario Interactivo',
+            'card.cal.desc': 'FullCalendar + Angular, modales accesibles y filtros.',
+            'card.tr.title': 'Stack Traefik',
+            'card.tr.desc': 'Reverse proxy, TLS automático y CI/CD con GitHub Actions.'
         },
         en: {
+            'nav.experience': 'Experience',
             'nav.projects': 'Projects',
             'nav.contact': 'Contact',
+            'hero.cta.view': 'See projects',
+            'hero.cta.copy': 'Copy email',
+            'hero.cta.developer': 'Full-Stack Developer · Laravel · Angular · Docker',
+            'section.projects': 'Projects',
+            'section.projects.lead': 'A short selection. Detailed pages coming next.',
+            'section.contact': 'Contact',
             'actions.theme': 'Theme',
             'actions.quick': 'Quick view',
             'actions.detail': 'View details',
+            'badge.available': 'Available',
+
+            // Cards
+            'card.mv.title': 'MV Dietetics Clinic',
+            'card.mv.desc': 'Appointments, Jitsi videocalls, role-based access and auditing.',
+            'card.cal.title': 'Interactive Calendar',
+            'card.cal.desc': 'FullCalendar + Angular, accessible modals and filters.',
+            'card.tr.title': 'Traefik Stack',
+            'card.tr.desc': 'Reverse proxy, automatic TLS and CI/CD with GitHub Actions.'
         }
     };
 
@@ -36,15 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyI18n(lang) {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            const txt = I18N[lang]?.[key] || I18N[DEFAULT_LANG][key] || el.textContent;
+            const txt = I18N[lang]?.[key] ?? I18N[DEFAULT_LANG]?.[key];
+            if (!txt) return;
+            // Para botones/enlaces usamos textContent (evita sobrescribir HTML interno)
             el.textContent = txt;
         });
-        // Cambia html@lang
         document.documentElement.lang = lang;
     }
     applyI18n(currentLang);
 
-    // Cambiar idioma
+
+    // Cambios de idioma (persisten y actualizan UI)
     langSelect?.addEventListener('change', () => {
         currentLang = langSelect.value;
         localStorage.setItem('lang', currentLang);

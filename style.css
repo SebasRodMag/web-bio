@@ -1,7 +1,7 @@
 :root {
     --color-principal-dia: #2a7bff;
     /* azul “día” (ejemplo) */
-    --color-principal-noche: #0ed678;
+    --color-principal-noche: #2a7bff;
     /* verde “noche” (ejemplo) */
 
     /* Map semántico: cambia solo aquí al alternar tema */
@@ -455,4 +455,130 @@ article.card img {
 
 .back-top.show {
     display: block
+}
+
+.tl-item:first-child .tl-card {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent),
+        0 8px 24px rgba(0, 0, 0, .20);
+}
+
+.tl-item:first-child .tl-dot {
+    background: var(--accent);
+}
+
+.center {
+    text-align: center
+}
+
+/* Línea central */
+.timeline {
+    position: relative;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: var(--line);
+}
+
+/* Grid: izq | línea | dcha */
+.tl-item {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: start;
+    gap: 0 18px;
+    margin: 18px 0;
+}
+
+/* Punto */
+.tl-dot {
+    grid-column: 2;
+    justify-self: center;
+    align-self: start;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+    margin-top: .65rem;
+}
+
+/* Tarjeta */
+.tl-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+}
+
+.tl-card h3 {
+    margin: .2rem 0 .2rem
+}
+
+.tl-card .muted {
+    color: var(--muted);
+    margin: 0 0 .4rem
+}
+
+.tl-card ul {
+    margin: .4rem 0 .6rem .9rem
+}
+
+.tl-card .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+/* Alternado automático */
+.tl-item:nth-child(odd) .tl-card {
+    grid-column: 1;
+}
+
+/* izquierda */
+.tl-item:nth-child(even) .tl-card {
+    grid-column: 3;
+}
+
+.chip {
+    display: inline-block;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    color: var(--accent);
+    padding: .35rem .6rem;
+    border-radius: .6rem;
+    margin: .2rem;
+    font-size: .85rem
+}
+
+/* Responsive: una columna */
+@media (max-width: 720px) {
+    .timeline::before {
+        left: 22px;
+        transform: none
+    }
+
+    .tl-item {
+        grid-template-columns: 44px 1fr;
+        gap: 0 12px
+    }
+
+    .tl-dot {
+        grid-column: 1;
+        margin-left: 8px
+    }
+
+    .tl-item .tl-card {
+        grid-column: 2;
+    }
 }
