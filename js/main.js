@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DEFAULT_LANG = 'es';
     const langSelect = document.getElementById('langSelect');
     const savedLang = localStorage.getItem('lang');
-    let currentLang = savedLang || (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+    let currentLang = savedLang || ((navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en');
     if (langSelect) langSelect.value = currentLang;
     document.documentElement.lang = currentLang;
 
@@ -16,12 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero.cta.copy': 'Copiar email',
             'hero.cta.developer': 'Desarrollador Full-Stack · Laravel · Angular · Docker',
             'section.projects': 'Proyectos',
-            'section.projects.lead': 'Una selección breve. Luego haremos páginas de detalle.',
+            'section.projects.lead': 'Vista rápida de la selección de proyectos, pueden verse más en profundidad.',
             'section.contact': 'Contacto',
             'actions.theme': 'Tema',
             'actions.quick': 'Vista rápida',
             'actions.detail': 'Ver detalle',
             'badge.available': 'Disponible',
+            'filter.all': 'Todos', 'filter.laravel': 'Laravel', 'filter.angular': 'Angular', 'filter.docker': 'Docker',
+            'modal.quick.gc': 'Gestión Clinica MV',
+            'modal.quick.cm': 'Centro Médico',
+
 
             // Cards (descripciones breves)
             'card.mv.title': 'Gestión Clinica MV',
@@ -30,7 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
             'card.cal.title': 'Calendario Interactivo',
             'card.cal.desc': 'FullCalendar + Angular, modales accesibles y filtros.',
             'card.tr.title': 'Stack Traefik',
-            'card.tr.desc': 'Reverse proxy, TLS automático y CI/CD con GitHub Actions.'
+            'card.tr.desc': 'Reverse proxy, TLS automático y CI/CD con GitHub Actions.',
+            'card.text.gc': 'Plataforma para la gestión de citas clínicas, optimizando la atención y el seguimiento entre especialistas y pacientes. La solución combina una API REST (Laravel) con una SPA (Angular) integrando Jitsi Meet para la realización de conferencias.',
+            'card.text.cm': 'Es una aplicación web, que consta de un backend (API Rest) con Laravel y el front (SPA) en Angular gestionado desde contenedores Docker con base de datos en MySQL. La aplicación consiste en un sistema de gestión de citas médicas para un centro que realiza reconocimientos médicos para empresas.',
+            'card.item.gc.1': 'API REST con autenticación y roles.',
+            'card.item.gc.2': 'Calendario y modales accesibles.',
+            'card.item.gc.3': 'Despliegue Docker y proxy inverso.',
+            'card.item.cm.1': 'API REST con autenticación y roles.',
+            'card.item.cm.2': 'SPA Angular con gestión de citas.',
+            'card.item.cm.3': 'Gestión de roles por Spatie y Autentificación por token mediante Laravel Sanctum',
+            'card.item.cm.4': 'Despliegue Docker.',
+            'card.item.tr.1': 'TLS automático, routing por host/path.',
+            'card.item.tr.2': 'Build/push de imágenes en GitHub.',
+            'card.item.ci.1': 'Filtros por estado y acciones rápidas.',
+            'card.item.ci.2': 'Focus trap y accesibilidad real.',
+            'card.item.vj.1': 'Salas seguras con token.',
+            'card.item.vj.2': 'Join en un clic desde la cita.',
         },
         en: {
             'nav.experience': 'Experience',
@@ -40,12 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero.cta.copy': 'Copy email',
             'hero.cta.developer': 'Full-Stack Developer · Laravel · Angular · Docker',
             'section.projects': 'Projects',
-            'section.projects.lead': 'A short selection. Detailed pages coming next.',
+            'section.projects.lead': 'Quick view of selected projects, more details available.',
             'section.contact': 'Contact',
             'actions.theme': 'Theme',
             'actions.quick': 'Quick view',
             'actions.detail': 'View details',
             'badge.available': 'Available',
+            'filter.all': 'All', 'filter.laravel': 'Laravel', 'filter.angular': 'Angular', 'filter.docker': 'Docker',
+            'modal.quick.gc': 'Clinic Management MV',
+            'modal.quick.cm': 'Medical Center',
 
             // Cards
             'card.mv.title': 'MV Clinic Management',
@@ -54,15 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
             'card.cal.title': 'Interactive Calendar',
             'card.cal.desc': 'FullCalendar + Angular, accessible modals and filters.',
             'card.tr.title': 'Traefik Stack',
-            'card.tr.desc': 'Reverse proxy, automatic TLS and CI/CD with GitHub Actions.'
+            'card.tr.desc': 'Reverse proxy, automatic TLS and CI/CD with GitHub Actions.',
+            'card.text.gc': 'Platform for managing clinical appointments, optimizing care and follow-up between specialists and patients. The solution combines a REST API (Laravel) with a SPA (Angular) integrating Jitsi Meet for conferencing.',
+            'card.text.cm': 'It is a web application, which consists of a backend (API Rest) with Laravel and the front (SPA) in Angular managed from Docker containers with a MySQL database. The application consists of a medical appointment management system for a center that performs medical examinations for companies.',
+            'card.item.gc.1': 'REST API with authentication and roles.',
+            'card.item.gc.2': 'Accessible calendar and modals.',
+            'card.item.gc.3': 'Docker deployment and reverse proxy.',
+            'card.item.cm.1': 'REST API with authentication and roles.',
+            'card.item.cm.2': 'Angular SPA with appointment management.',
+            'card.item.cm.3': 'Role management by Spatie and Token Authentication using Laravel Sanctum',
+            'card.item.cm.4': 'Docker deployment.',
+            'card.item.tr.1': 'Automatic TLS, routing by host/path.',
+            'card.item.tr.2': 'Image build/push on GitHub.',
+            'card.item.ci.1': 'Filters by status and quick actions.',
+            'card.item.ci.2': 'Focus trap and real accessibility.',
+            'card.item.vj.1': 'Secure rooms with token.',
+            'card.item.vj.2': 'One-click join from the appointment.',
         }
     };
 
     //Precedencia del .md
     function toFinalMdUrl(baseOrFull, lang) {
-        // Si ya viene con .md, lo respetamos
         if (/\.md$/i.test(baseOrFull)) return baseOrFull.replace(/^\/+/, '');
-        // Si no, construimos base + .<lang>.md
         return `${baseOrFull}.${lang}.md`.replace(/^\/+/, '');
     }
 
@@ -142,27 +177,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     async function fetchWithFallback(baseOrFull) {
-        // 1º intenta con el idioma actual; 2º cae a ES
         const tryOnce = async (u) => {
             const res = await fetch(u, { cache: 'no-store' });
             if (!res.ok) throw new Error(`HTTP ${res.status} al cargar ${u}`);
             return res.text();
         };
+
         const first = toFinalMdUrl(baseOrFull, currentLang);
-        try { return await tryOnce(first); }
-        catch {
+        try {
+            return await tryOnce(first);
+        } catch (err) {
             const fallback = toFinalMdUrl(baseOrFull, 'es');
-            if (fallback === first) throw error; // ya era ES
+            if (fallback === first) throw err;   // ya intentamos ES
             return await tryOnce(fallback);
         }
-    }
-
-
-    async function loadMarkdown(url) {
-        const finalUrl = url.replace(/^\/+/, ''); // quita "/" inicial por si acaso
-        const res = await fetch(finalUrl, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status} al cargar ${finalUrl}`);
-        return await res.text();
     }
 
     async function openFromMarkdown(baseOrFull) {

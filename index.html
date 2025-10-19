@@ -51,35 +51,47 @@
             </div>
 
         </section>
+        <!--
+        Espacio: %20
+        á: %C3%A1
+        é: %C3%A9
+        í: %C3%AD
+        ó: %C3%B3
+        ú: %C3%BA
+        -->
 
         <!-- Proyectos -->
-        <section id="proyectos" aria-labelledby="h1" class="hero">
-            <h2 id="h2-proy" data-anim="fade">Proyectos</h2>
-            <p class="lead muted" data-anim="fade">
+        <section id="proyectos" aria-labelledby="h2-proy" class="hero">
+            <h2 id="h2-proy" data-anim="fade" data-i18n="section.projects">Proyectos</h2>
+            <p class="lead muted" data-anim="fade" data-i18n="section.projects.lead">
                 Selección de trabajos recientes. Filtra por tecnología para ver lo más relevante.
             </p>
             <div class="filterbar" data-anim="fade">
-                <button class="btn active chip" data-filter="all" type="button">Todos</button>
-                <button class="btn chip" data-filter="laravel" type="button">Laravel</button>
-                <button class="btn chip" data-filter="angular" type="button">Angular</button>
-                <button class="btn chip" data-filter="docker" type="button">Docker</button>
-            </div>
+                <button class="btn active chip" data-filter="all" data-i18n="filter.all" type="button">Todos</button>
+                <button class="btn chip" data-filter="laravel" data-i18n="filter.laravel" type="button">Laravel</button>
+                <button class="btn chip" data-filter="angular" data-i18n="filter.angular" type="button">Angular</button>
+                <button class="btn chip" data-filter="docker" data-i18n="filter.docker" type="button">Docker</button>
+            </div><br>
 
             <div class="grid">
                 <article class="card project-card" data-tags="laravel,docker" data-anim="fade" aria-labelledby="p1">
-                    <h3 id="p1" style="margin-top:0">Clínica Dietética MV</h3>
-                    <p>Plataforma para la gestión de citas clínicas, optimizando la atención y el seguimiento entre
+                    <h3 id="modalTitle" style="margin-top:0" class="muted" data-i18n="modal.quick.gc">Gestión Clinica MV
+                    </h3>
+                    <p data-i18n="card.text.gc">Plataforma para la gestión de citas clínicas, optimizando la atención y
+                        el seguimiento entre
                         especialistas y pacientes. La solución combina una API REST (Laravel) con una SPA (Angular)
                         integrando Jitsi Meet para la realización de conferencias.</p>
-                    <a href="proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Cl%C3%ADnica%20Diet%C3%A9tica%20MV"
-                        data-i18n="actions.detail" aria-label="Ver proyecto Clínica Dietética MV">Ver</a>
+                    <a href="proyectos/detalle.html?src=content/proyectos/clinica-mv&title=Gesti%C3%B3n%20Clinica%20MV"
+                        data-i18n="actions.detail" aria-label="Ver proyecto Gestión Clinica MV">Ver</a>
                 </article>
 
                 <article>
                     <div class="card project-card" data-tags="laravel,docker,angular" data-anim="fade"
                         aria-labelledby="p1">
-                        <h3 id="p2" style="margin-top:0">Centro Médico</h3>
-                        <p>Es una aplicación web, que consta de un backend (API Rest) em Laravel y el front (SPA) en
+                        <h3 id="modalTitle" style="margin-top:0" class="muted" data-i18n="modal.quick.cm">Centro Médico
+                        </h3>
+                        <p data-i18n="card.text.cm">Es una aplicación web, que consta de un backend (API Rest) em
+                            Laravel y el front (SPA) en
                             Angular gestionado desde contenedores Docker con base de datos en MySQL</p>
                         <p>La aplicación consiste en un sistema de gestión de citas médicas para un centro que realiza
                             reconocimientos médicos para empresas.</p>
@@ -103,9 +115,9 @@
                         <h3 data-i18n="card.mv.title">Gestión Clinica MV</h3>
                         <p class="muted">Laravel · Angular · Docker</p>
                         <ul>
-                            <li>API REST con autenticación y roles.</li>
-                            <li>Calendario y modales accesibles.</li>
-                            <li>Despliegue Docker y proxy inverso.</li>
+                            <li data-i18n="card.item.gc.1">API REST con autenticación y roles.</li>
+                            <li data-i18n="card.item.gc.2">Calendario y modales accesibles.</li>
+                            <li data-i18n="card.item.gc.3">Despliegue Docker y proxy inverso.</li>
                         </ul>
                         <div class="actions" style="display: flex; justify-content: space-around;">
                             <a href="#" data-modal-md="content/proyectos/clinica-mv.quick"
@@ -122,10 +134,11 @@
                         <h3 data-i18n="card.cm.title">Centro Médico</h3>
                         <p class="muted">Laravel · Angular · Docker</p>
                         <ul>
-                            <li>API REST con autenticación y roles.</li>
-                            <li>SPA Angular con gestión de citas.</li>
-                            <li>Gestión de roles por Spatie y Autentificación por token mediante Laravel Sanctum</li>
-                            <li>Despliegue Docker.</li>
+                            <li data-i18n="card.item.cm.1">API REST con autenticación y roles.</li>
+                            <li data-i18n="card.item.cm.2">SPA Angular con gestión de citas.</li>
+                            <li data-i18n="card.item.cm.3">Gestión de roles por Spatie y Autentificación por token
+                                mediante Laravel Sanctum</li>
+                            <li data-i18n="card.item.cm.4">Despliegue Docker.</li>
                         </ul>
                         <div class="actions">
                             <a href="#" data-modal-md="content/proyectos/stack-traefik.quick"
@@ -142,8 +155,8 @@
                         <h3 data-i18n="card.tr.title">Stack Traefik</h3>
                         <p class="muted">CI/CD · Contenedores</p>
                         <ul>
-                            <li>TLS automático, routing por host/path.</li>
-                            <li>Build/push de imágenes.</li>
+                            <li data-i18n="card.item.tr.1">TLS automático, routing por host/path.</li>
+                            <li data-i18n="card.item.tr.2">Build/push de imágenes en GitHub.</li>
                         </ul>
                         <div class="actions">
                             <a href="#" data-modal-md="content/proyectos/stack-traefik.quick"
@@ -160,8 +173,8 @@
                         <h3 data-i18n="card.cal.title">Calendario Interactivo</h3>
                         <p class="muted">FullCalendar · Angular</p>
                         <ul>
-                            <li>Filtros por estado y acciones rápidas.</li>
-                            <li>Focus trap y accesibilidad real.</li>
+                            <li data-i18n="card.item.ci.1">Filtros por estado y acciones rápidas.</li>
+                            <li data-i18n="card.item.ci.2">Focus trap y accesibilidad real.</li>
                         </ul>
                         <div class="actions">
                             <a href="#" data-modal-md="content/proyectos/calendario-interactivo.quick"
@@ -178,8 +191,8 @@
                         <h3>Videollamadas con Jitsi</h3>
                         <p class="muted">Integración embebida</p>
                         <ul>
-                            <li>Salas seguras con token.</li>
-                            <li>Join en un clic desde la cita.</li>
+                            <li data-i18n="card.item.vj.1">Salas seguras con token.</li>
+                            <li data-i18n="card.item.vj.1">Join en un clic desde la cita.</li>
                         </ul>
                         <div class="actions">
                             <a href="#" data-modal-md="content/proyectos/clinica-mv.quick"
@@ -195,10 +208,21 @@
         <!-- CONTACTO -->
         <section id="contacto" aria-labelledby="h2-contacto">
             <h2 id="h2-contacto">Contacto</h2>
-            <div class="hero-cta" data-anim="fade">
-                <p>Email: <a href="mailto:sebastian@asrm.dev">sebastian@asrm.dev</a></p>
-                <p>GitHub: <a href="https://github.com/SebasRodMag">SebasRodMag</a></p>
-                <p>Linkedin: <a href="https://www.linkedin.com/in/andres-sebastian-rodriguez/">Sebastián Rodríguez</a>
+            <div class="hero-cta contact" data-anim="fade">
+                <p>
+                    <span class="contact-icon" style="--icon: url('./assets/mail_correo.png')"
+                        aria-hidden="true"></span>
+                    <a href="mailto:sebastian@asrm.dev">sebastian@asrm.dev</a>
+                </p>
+                <p>
+                    <span class="contact-icon" style="--icon: url('./assets/github_icono.png')"
+                        aria-hidden="true"></span>
+                    <a href="https://github.com/SebasRodMag">SebasRodMag</a>
+                </p>
+                <p>
+                    <span class="contact-icon" style="--icon: url('./assets/linkedin_icono.png')"
+                        aria-hidden="true"></span>
+                    <a href="https://www.linkedin.com/in/andres-sebastian-rodriguez/">Sebastián Rodríguez</a>
                 </p>
             </div>
             <div class="hero-cta" data-anim="fade">
