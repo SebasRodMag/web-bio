@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'filter.all': 'Todos', 'filter.laravel': 'Laravel', 'filter.angular': 'Angular', 'filter.docker': 'Docker',
             'modal.quick.gc': 'Gestión Clinica MV',
             'modal.quick.cm': 'Centro Médico',
+            'actions.bg.on': 'Fondo: ON',
+            'actions.bg.off': 'Fondo: OFF',
 
 
             // Cards (descripciones breves)
@@ -68,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'filter.all': 'All', 'filter.laravel': 'Laravel', 'filter.angular': 'Angular', 'filter.docker': 'Docker',
             'modal.quick.gc': 'Clinic Management MV',
             'modal.quick.cm': 'Medical Center',
+            'actions.bg.on': 'Background: ON',
+            'actions.bg.off': 'Background: OFF',
 
             // Cards
             'card.mv.title': 'MV Clinic Management',
@@ -267,4 +271,93 @@ document.addEventListener('DOMContentLoaded', () => {
             c.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
         });
     }));
+
+    // ===== Fondo “reflejo” con parallax =====
+    (() => {
+        const ghost = document.getElementById('bg-ghost');
+        const source = document.querySelector('.wrap');
+        if (!ghost || !source) return;
+
+        // Clonamos el contenido principal
+        const clone = source.cloneNode(true);
+
+        // Higiene: evita conflictos de IDs/JS en el clon
+        clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+        // Desactiva enlaces/inputs dentro del clon
+        clone.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+            el.setAttribute('tabindex', '-1');
+            el.removeAttribute('href');
+            el.disabled = true;
+        });
+
+        // Opcional: elimina el modal del clon si lo tuviera
+        clone.querySelectorAll('#modal').forEach(el => el.remove());
+
+        ghost.appendChild(clone);
+
+        // Parallax suave (≈30–50% de la velocidad del scroll)
+        const factor = 0.45; // ajusta a gusto (0.2 = más lejano, 0.5 = más cercano)
+        let ticking = false, lastY = 0;
+
+        const update = () => {
+            document.documentElement.style.setProperty('--bg-parallax', `${-lastY * factor}px`);
+            ticking = false;
+        };
+
+        const onScroll = () => {
+            lastY = window.scrollY || window.pageYOffset;
+            if (!ticking) {
+                requestAnimationFrame(update);
+                ticking = true;
+            }
+        };
+
+        // Inicializa posición
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ===== Toggle fondo “reflejo” ON/OFF =====
+
+    // Estado inicial del efecto de fondo
+    const BG_KEY = 'bgghost';
+    const savedBgGhost = localStorage.getItem(BG_KEY); // 'on' | 'off' | null
+    // Por defecto: ON
+    document.documentElement.setAttribute('data-bgghost', savedBgGhost === 'off' ? 'off' : 'on');
+
+    function syncBgButtonLabel() {
+        const btn = document.getElementById('bgToggle');
+        if (!btn) return;
+        const on = document.documentElement.getAttribute('data-bgghost') !== 'off';
+        btn.setAttribute('aria-pressed', String(on));
+        // Actualiza el texto según idioma
+        const key = on ? 'actions.bg.on' : 'actions.bg.off';
+        const label = (I18N[currentLang]?.[key]) || (I18N[DEFAULT_LANG]?.[key]) || (on ? 'Fondo: ON' : 'Fondo: OFF');
+        // Si pusiste <span data-i18n> dentro, actualiza su textContent:
+        const span = btn.querySelector('[data-i18n]');
+        if (span) { span.textContent = label; span.setAttribute('data-i18n', key); }
+        else { btn.textContent = label; } // fallback si quitaste el span
+    }
+
+    applyI18n(currentLang);
+    syncBgButtonLabel();
+
+    langSelect?.addEventListener('change', () => {
+        currentLang = langSelect.value;
+        localStorage.setItem('lang', currentLang);
+        applyI18n(currentLang);
+        syncBgButtonLabel(); // <—
+    });
+
+    const bgToggle = document.getElementById('bgToggle');
+    if (bgToggle) {
+        bgToggle.addEventListener('click', () => {
+            const isOn = document.documentElement.getAttribute('data-bgghost') !== 'off';
+            const next = isOn ? 'off' : 'on';
+            document.documentElement.setAttribute('data-bgghost', next);
+            localStorage.setItem(BG_KEY, next);
+            syncBgButtonLabel();
+        });
+    }
+    
 });

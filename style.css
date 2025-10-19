@@ -12,6 +12,12 @@
     --icon-size: clamp(18px, 1.6vw, 24px);
     --icon-shadow: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
     --icon-shadow-hover: drop-shadow(0 1px 3px rgba(0, 0, 0, .25));
+    --bg-ghost-blur: 10px;
+    --bg-ghost-scale: 1.03;
+    --bg-ghost-bright: .95;
+    --bg-ghost-contrast: 1.05;
+    --bg-ghost-sat: .95;
+    --bg-ghost-opacity: .20;
 }
 
 [data-theme="light"] {
@@ -25,9 +31,20 @@
         drop-shadow(0 0 1px rgba(0, 0, 0, .20)) drop-shadow(0 2px 6px rgba(0, 0, 0, .14));
     --icon-shadow-hover:
         drop-shadow(0 0 1px rgba(0, 0, 0, .22)) drop-shadow(0 3px 10px rgba(0, 0, 0, .20));
+    --bg-ghost-blur: 10px;
+    /*Estaba a 9px*/
+    --bg-ghost-bright: 1.02;
+    --bg-ghost-contrast: 1.18;
+    /*Estaba a 1.08*/
+    --bg-ghost-sat: 1.05;
+    --bg-ghost-opacity: .40;
+    /*Estaba a .28*/
 }
 
-/* Reset básico */
+[data-bgghost="off"] #bg-ghost {
+    display: none;
+}
+
 * {
     box-sizing: border-box
 }
@@ -55,12 +72,14 @@ a:hover {
 }
 
 .wrap {
+    position: relative;
+    z-index: 1;
     max-width: var(--maxw);
     margin: 0 auto;
     padding: 24px
 }
 
-/* Header (usa .topbar si quieres esos estilos en vez de header genérico) */
+/* Header */
 header {
     display: flex;
     align-items: center;
@@ -72,7 +91,7 @@ nav a {
     margin-right: 12px
 }
 
-/* Botones y chips (UNICA versión) */
+/* Botones y chips */
 .btn {
     border: 1px solid var(--accent);
     color: var(--accent);
@@ -121,7 +140,6 @@ nav a {
     margin: 0
 }
 
-/* Coincidir con tu HTML (.hero-cta) */
 .hero-cta {
     display: flex;
     gap: 10px;
@@ -192,7 +210,7 @@ h2 {
     text-align: center
 }
 
-/* Modal (UNICA versión con transición) */
+/* Modal */
 .modal {
     position: fixed;
     inset: 0;
@@ -304,7 +322,7 @@ body.lock-scroll {
     font-size: .95rem
 }
 
-/* -------- Página de detalle (TOC) -------- */
+/* -------- Página de detalle -------- */
 .layout {
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -504,13 +522,13 @@ article.card img {
 /*Clases para la sección de contacto*/
 .hero-cta.contact {
     display: flex;
-    flex-direction: raw;
+    flex-direction: row;
     align-items: flex-start;
     /* icono + texto alineados a la izquierda */
     gap: .35rem;
 }
 
-/* Cada fila (p) icono + link */
+/* Cada fila p icono + link */
 .hero-cta.contact p {
     display: inline-flex;
     align-items: center;
@@ -518,7 +536,7 @@ article.card img {
     margin: .2rem 0;
 }
 
-/* Iconos: tamaño fluido, 1:1, que no se deformen */
+/* Tamaño fluido de los iconos con el cambio de tamaño según el widescreen, 1:1, no se deformen */
 .contact-icon {
     width: var(--icon-size);
     height: var(--icon-size);
@@ -534,21 +552,76 @@ article.card img {
     transition: filter .15s ease, transform .15s ease;
 }
 
-/* Enlaces: mejor click-target */
+/* Para mejorar el click-target de los enlaces */
 .hero-cta.contact a {
     line-height: 1.2;
 }
 
-/* Realce al pasar el ratón/foco */
+/* Realce al pasar el ratón */
 .hero-cta.contact a:hover .contact-icon,
 .hero-cta.contact a:focus-visible .contact-icon {
     filter: var(--icon-shadow-hover);
     transform: translateY(-1px);
 }
 
-/* En móviles estrechos, un poco más de aire */
 @media (max-width:480px) {
     .hero-cta.contact {
         gap: .5rem;
+    }
+}
+
+/* ---- Background ---- */
+/* Fondo “reflejo” desenfocado con parallax */
+#bg-ghost {
+    position: fixed;
+    inset: -28px;
+    /* sangría para que el blur no recorte bordes */
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    filter:
+        blur(var(--bg-ghost-blur)) saturate(var(--bg-ghost-sat)) contrast(var(--bg-ghost-contrast)) brightness(var(--bg-ghost-bright));
+    opacity: var(--bg-ghost-opacity);
+    /* intensidad del reflejo */
+    transform: translateY(var(--bg-parallax, 0px)) scale(var(--bg-ghost-scale));
+    will-change: transform;
+
+}
+
+/* Ajustes por tema */
+[data-theme="light"] #bg-ghost {
+    mix-blend-mode: multiply;
+    /*     filter: blur(18px) saturate(.95) brightness(1.06);
+    opacity: .24; */
+}
+
+[data-theme="dark"] #bg-ghost {
+    mix-blend-mode: normal;
+    /*     filter: blur(14px) saturate(.85) brightness(.92);
+    opacity: .14; */
+}
+
+#bg-ghost .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    opacity: 1;
+}
+
+/* ----Boton de toggle del fondo ---- */
+
+/* Ancho estable para ES/EN y ON/OFF */
+.toggle-btn {
+    min-inline-size: 9rem;
+    /* cubre "Background: OFF" en inglés */
+    display: inline-flex;
+    justify-content: center;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+/* Un poco más compacto en móviles estrechos */
+@media (max-width: 480px) {
+    .toggle-btn {
+        min-inline-size: 9.5rem;
     }
 }
